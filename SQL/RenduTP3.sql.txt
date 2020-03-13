@@ -1,0 +1,141 @@
+﻿*************************************************************************
+Votre NOM  : 
+Votre Prénom :
+*************************************************************************
+Vous devez répondre aux questions dans ce document 
+directement sous chaque question.
+Vous devez renvoyer ce document par mail à la fin de la séance. 
+
+CARACTERISTIQUES du MAL obligatoires : 
+Objet: IPI-SQL-020-Nom-Prénom
+En pièce jointe : le fichier. Si le .sql pose un problème, faites un .txt
+adresse d''envoi : liaudet.bertrand@wanadoo.fr
+
+Attention: les mails sont filtrés sur la base de l''intitulé de l''objet.
+Ne vous trompez pas, sinon votre mail sera perdu.
+
+*************************************************************************
+Étapes du TP 3
+*************************************************************************
+0 - Création de la BD, des tables et des tuples
+0.1 : Créez la BD « empdeptTP03sansFK »
+•	Créez la BD empdeptTP03sansFK avec les tables « emp » et « dept » (code dans le chapitre 4 du cours).
+•	Vérifiez que la BD a été créée : SHOW DATABASES
+•	Vérifiez qu’elle contient les 2 tables : SHOW TABLES
+•	Vérifiez que les tables sont vides : SELECT
+0.2 : Créez, dans les table « emp » et « dept »,  les tuples présentés dans le cours
+•	Créez les tuples présentée dans le cours dans les tables « emp » et « dept »: INSERT INTO
+•	Affichez les tuples créés : SELECT
+•	Quels sont les numéros des derniers tuples créés (ADAMS et MILLER) ? Pourquoi ?
+
+*************************************************************************
+1 - Jointure et requêtes imbriquées
+1.3 : Affichez les tous les tuples des deux tables.
+1.4 : Affichez les employés gagnant plus que 2000.
+1.5 : Affichez les employés avec les informations de leurs départements
+1.6 : Affichez les employés du département SALES sans les informations de leurs départements.
+•	Avec une jointure
+•	Avec une requête imbriquée
+1.7 : Affichez les employés de DALLAS qui gagnent plus que 2000 avec les informations de leurs départements.
+•	Peut-on faire une requête imbriquée ?
+ 
+*************************************************************************
+2 - Vue
+2.1 : création d’une vue
+•	Créez la vue empSales correspondant aux employés du ou des département SALES.
+•	Listez les tables de la BD.
+•	Affichez tous les employés de la vue empSales.
+•	Affichez tous les employés de la vue empSales dont la commission (COM) est supérieur à 50.
+•	Affichez le code de la vue empSales.
+2.2 : jointure avec une vue
+•	Créez la vue des employés du département 10 : empD10
+•	Listez les tables de la BD
+•	Affichez tous les employés de la vue empD10.
+•	Affichez tous les employés de la vue empD10 avec les informations de leurs départements (il faut faire une jointure).
+
+************************************************************************* 
+3 - Commit, Rollback, Transaction, Autocommit
+3.1 : Première gestion de transaction
+•	Après avoir créée la BD empdepttp03sansFK, fermez tous vos client-calculette.
+•	Ouvrez deux clients-calculette : CC1 et CC2.
+•	Dans CC1, affichez tous les départements.
+•	Dans CC1, ajoutez le département (50, ‘n50’, ‘v50’)
+•	Dans CC1 et dans CC2, affichez tous les départements. Que constatez-vous ?
+•	Dans CC1, affichez la variable @@autocommit (SELECT)
+•	Dans CC1, passez la variable @@autocommit à 0 (SET)
+•	Dans CC1, ajoutez le département (60, ‘n60’, ‘v60’)
+•	Dans CC1 et dans CC2, affichez tous les départements. Que constatez-vous ? Comment interprétez-vous la situation ?
+•	Dans CC2, ajoutez le département (70, ‘n70’, ‘v70’)
+•	Dans CC1 et dans CC2, affichez tous les départements. Que constatez-vous ? Comment interprétez-vous la situation ?
+•	Dans CC1, faite un « COMMIT ».
+•	Dans CC1 et dans CC2, affichez tous les départements. Que constatez-vous ? Comment interprétez-vous la situation ?
+
+3.2 : Deuxième gestion de transaction
+•	A la suite de l’exercice précédent : dans CC1, ajoutez le département (80, ‘n80’, ‘v80’).
+•	Dans CC1 et dans CC2, affichez tous les départements. Que constatez-vous ? 
+•	Dans CC2, ajoutez le département (80, ‘n80’, ‘v80’). Que constatez-vous ?
+•	Dans CC2A la suite de l’opération précédente, attendez sans rien faire. Que constatez-vous après environ 2 minutes ?
+•	Dans CC2, Après avoir eu le message « Lock wait timeout exceeded; try restarting transaction », ajoutez à nouveau le département le département (80, ‘n80’, ‘v80’). Que constatez-vous ? Rapidement, dans CC1, faites un « ROLLBACK ». Retournez dans CC2. Que constatez-vous ? Comment interprétez-vous la situation.
+•	Dans CC1 et dans CC2, affichez tous les départements. Cela confirme-t-il bien vos interprétations ?
+
+************************************************************************* 
+4 - Contraintes d’intégrité et contraintes d’intégrité référentielles
+4.1 : Créez la BD « empdeptTP03avecFK »
+•	Créez la BD empdeptTP03avecFK avec les tables « emp » et « dept » et les tuples (code des tables dans le chapitre 4 du cours).
+•	Vérifiez que la BD a été créée : SHOW DATABASES
+•	Vérifiez qu’elle contient les 2 tables : SHOW TABLES
+•	Vérifiez que les tables sont bien remplies : SELECT * …
+4.2 : Regardez la table « emp »
+•	Faites un show create table emp.
+•	Quel est le moteur de la table.
+•	La clé primaire a-t-elle bien été créée ?
+•	Les clé étrangères ont-elles bien été créées ?
+•	L’auto-incrément a-t-il bien été créé ?
+•	Quelle sera le numéro de NE du prochain employé inserté ?
+4.3 : Tests de contraintes d’intégrité référentielle
+•	Ajoutez le tuple suivant :
+insert into emp values (7900,'OBAMA','CLERK','1982-01-23',1300,NULL,10,7782);
+•	L’employé a-t-il été ajouté ? Quel problème cela pose-t-il ?
+4.4 : Tests de contraintes d’intégrité référentielle
+•	Ajoutez le tuple suivant :
+insert into emp values (NULL,'OBAMA','CLERK','1982-01-23',1300,NULL,10,7782);
+•	L’employé a-t-il été ajouté ? Quel est la valeur du NE de l’employé ajouté.
+4.5 : Tests de contraintes d’intégrité référentielle
+•	Ajoutez le tuple suivant :
+insert into emp values (NULL, 'TRUMP','CLERK','1982-01-23',1300,NULL,10,7781);
+•	L’employé a-t-il été ajouté ? Quel problème cela pose-t-il ?
+4.6 : Tests de contraintes d’intégrité référentielle
+•	Ajoutez le tuple suivant :
+insert into emp values (NULL, 'TRUMP','CLERK','1982-01-23',1300,NULL,10,7781);
+•	L’employé a-t-il été ajouté ? Quel problème cela pose-t-il ?
+4.7 : Tests de contraintes d’intégrité référentielle
+•	Supprimez le département n° 40.
+•	Le département a-t-il été supprimé ?
+4.8 : Tests de contraintes d’intégrité référentielle
+•	Supprimez le département n° 30.
+•	Le département a-t-il été supprimé ? Quel problème cela pose-t-il ?
+4.9 : Tests de contraintes d’intégrité référentielle
+•	Supprimez l’employé nommé OBAMA.
+•	L’employé a-t-il été supprimé ? 
+4.10 : Tests de contraintes d’intégrité référentielle
+•	Supprimez l’employé nommé BLAKE.
+•	L’employé a-t-il été supprimé ? Quel problème cela pose-t-il ?
+
+************************************************************************* 
+5 - Index
+5.1 : Créez la BD « empdeptTP03avecFK »
+•	Créez la BD empdeptTP03avecFK avec les tables « emp » et « dept » et les tuples (code des tables dans le chapitre 4 du cours).
+•	Vérifiez que la BD a été créée : SHOW DATABASES
+•	Vérifiez qu’elle contient les 2 tables : SHOW TABLES
+•	Vérifiez que les tables sont bien remplies : SELECT * …
+5.2 : Regardez la table « dept »
+•	Faites un show create table emp.
+•	Combien y a-t-il d’index ?
+•	A quoi correspondent chaque index ?
+5.3 : Regardez la table « emp »
+•	Faites un show create table emp.
+•	Combien y a-t-il d’index ?
+•	A quoi correspondent chaque index ?
+5.4 : Créez un index
+•	Ajoutez un index sur le salaire.
+•	Vérifiez qu’il y a bien été pris en compte. Combien y a-t-il d’index ?

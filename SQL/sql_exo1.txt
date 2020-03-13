@@ -1,0 +1,322 @@
+EXERCICE 0 : 
+1. Démarrez le serveur.
+2. Démarrez un client-calculette.
+3. Affichez la version du serveur dans la calculette : select version();
+4. Affichez les BD présentes sur votre SGBD : show databases();
+5. Charger les tables de la base de données décrite dans le fichier EmployesTP01.sql
+   Le plus simple est de faire un copier-coller du contenu du fichier .sql dans la calculette.
+
+Cette BD correspond à la table suivante : 
+
+EMPLOYES(NE, NOM, FONCTION, DATEMB, SAL, COMM, ND)
+•	NE	numéro de l’employé. Clé primaire.
+•	NOM	nom de l’employé.
+•	FONCTION	intitulé du poste occupé.
+•	DATEMB	date d’embauche.
+•	SAL	salaire de l’employé.
+•	COMM	commission (part de salaire variable).
+•	ND	n° du département dans lequel travaille l’employé.
+
+6. Affichez les BD présentes sur votre SGBD : show databases();
+   Vérifiez que la BD "employesTP01" a bien été créée.
+7. Selectionnez la BD "employesTP01" : use employesTP01;
+8. Affichez les tables de la BD "employesTP01" : show tables;
+9. Affichez la structure de la table "employes" : desc employes;
+   La commande desc est un diminutif de describe.
+10.Lisez le contenu du fichier EmployesTP01.sql. Cherchez à tout comprendre.
+
+****************************************************************************
+****************************************************************************
+****************************************************************************
+EXERCICE 1 : interrogation de la BD - Projection, restriction, distinct et tri
+
+Travail à faire
+•	Répondre à toutes les questions ci-dessous.
+•	Le fichier répond déjà aux 2 premières questions du TP : vous devez utiliser le même formalisme pour les autres questions.
+•	Pour chaque question vous devez mettre :	
+	a	L’intitulé de la question
+	b	Le select de la réponse
+	c	La CP de la table résultat de chaque question
+****************************************************************************
+Version réduite (si demandée)
+•	Répondez uniquement aux questions qui ne commencent pas par (*), 
+****************************************************************************
+Attention !
+•	Vous ne devez projeter que les attributs nécessaires : CP, CS, AD, AR – Tri devant ou derrière (Clé Primaire, Clé Significative, Attributs Demandés, Attributs de restriction).
+•	Vous devez précisez la clé primaire de chaque table de résultats.
+****************************************************************************
+Outils
+•	Utilisez un éditeur efficace : notepad++, sublimtext : qui fasse de la coloration syntaxique. 
+•	Mettez une extension .sql à vos fichiers pour avoir la coloration syntaxique.
+•	Faites des copier-coller depuis l''éditeur jusque dans le client-calculette.
+
+****************************************************************************
+Les requêtes
+1.	Tous les employés avec tous leurs attributs
+SELECT * 
+FROM EMPLOYES ;
+-- CP : NE
+
+
+2.	Tous les employés
+SELECT NE, NOM 
+FROM EMPLOYES ;
+-- CP : NE
+
+
+3.	Tous les employés triés par ordre alphabétique
+	
+	SELECT * 
+	FROM EMPLOYES 
+	ORDER BY NOM; -- ASC par defaut
+
+4.	Tous les employés triés par n° de département croissant, ordre alphabétique des fonctions, ancienneté décroissante
+
+	SELECT * 
+	FROM EMPLOYES 
+	ORDER BY ND, FONCTION, DATEMB DESC;
+	
+
+5.	(*) Tous les employés avec leurs salaires triés par salaire décroissant
+
+	SELECT * 
+	FROM EMPLOYES 
+	ORDER BY SAL DESC;
+		
+	
+6.	(*) Tous les employés du département 30 avec tous leurs attributs
+
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE ND = 30;
+
+
+7.	Tous les employés du département 30 triés par ordre alphabétique
+
+	SELECT * FROM EMPLOYES 
+	WHERE ND = 30 
+	ORDER BY NOM; --par defaut ASC
+
+	
+8.	Tous les managers des départements 20 et 30
+
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE FONCTION = 'MANAGER' and (ND = 20 or ND = 30); -- ND in (20,30)
+
+	
+8 bis : 
+    Tous les employés appartement à un département dont la valeur est placée dans une variable @nd.
+    Donner 10 à @nd et lancer la requête.
+    Donner 20 à @nd et lancer la requête.
+
+  	SET @nd=10;
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE ND=@nf;
+
+	SET @nd = 20;
+	SELECT * 
+	FROM EMPLOTES
+	WHERE ND=@nd;
+
+
+8 ter : 
+    Créer une vue apppelée managers qui contiennent les managers avec tous leurs attributs sauf leur fonction.
+    Vérifier que cette vue a bien été créée
+    Ecrire une requêtes qui affiche tous les éléments de cette vue avec tous leurs attributs
+    Ecrire une requête qui affiche tous les managers des départements 20 et 30 en partant de cette vue.
+
+	CREATE VIEW empmanager AS
+	SELECT * 
+	FROM EMPLOYES
+	WHERE FONCTION = 'MANAGER'
+
+	SELECT * FROM empmanager
+	WHERE ND in (30,20);
+
+
+9.	(*) Tous les employés qui ne sont pas managers et qui sont embauchés en 1981
+
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE NOT FONCTION="MANAGER" AND DATEMB LIKE '1981%' --mais LIKE pour "chaines de caracteres" pas pour les dates
+	
+	ou	
+	
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE YEAR(DATEMB)=1981 AND FONCTION != "MANAGER"; 		
+
+
+9 bis : 
+    Tous les employés embauché une certaine année. La valeur de l''année est placée dans une variable @annee.
+    Donner 1981 à @annee et lancer la requête.
+    Donner 1980 à @annee et lancer la requête.
+
+	SET @annee = 1981;
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE YEAR(DATEMB)=@annee;
+
+	SET @annee = 1980;
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE YEAR(DATEMB)=@annee;
+
+
+10.	Toutes les fonctions de la société
+
+	SELECT DISTINCT FONCTION
+	FROM EMPLOYES;
+	
+
+11.	Tous les employés ne travaillant pas dans le département 30 et qui soit ont un salaire > à 2800, soit sont manager.
+
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE ND != 30 AND (SAL > 2800 OR FONCTION = 'MANAGER')
+
+
+12.	(*) Tous les employés dont le salaire est compris entre 1000 et 2000
+
+	SELECT * 
+	FROM EMPLOYES 
+	WHERE SAL BETWEEN 1000 AND 2000;
+
+
+13.	Tous les numéros de département
+
+	SELECT ND 
+	FROM EMPLOYES; 
+
+
+14.	Toutes les fonctions par département (10 : président, 10 : manager, etc.)
+
+	SELECT ND, FONCTION
+	FROM EMPLOYES
+	GROUP BY ND, FONCTION
+	ORDER BY ND;
+
+
+15.	Tous les employés ayant ou pouvant avoir une commission
+
+	SELECT *
+	FROM EMPLOYES
+	WHERE COMM IS NOT NULL;
+
+
+16.	(*) Tous les salaires, commissions et totaux (salaire + commission) des vendeurs
+
+	SELECT NOM, (SAL + IFNULL(COMM,0)) AS TOTAUX
+	FROM EMPLOYES
+	WHERE FONCTION = 'SALESMAN';
+	
+
+
+17.	Tous les salaires, commissions et totaux (salaire + commission) des employés
+
+	SELECT NOM, (SAL + IFNULL(COMM,0)) AS TOTAUX
+	FROM EMPLOYES
+
+
+18.	(*) Tous les employés embauchés en 1981
+
+	SELECT NOM, DATEMB 
+	FROM EMPLOYES
+	WHERE YEAR(DATEMB) = 1981;
+
+
+19.	Tous les employés avec leur date d’embauche, la date du jour et leur nombre d’années d’ancienneté (on considérera que toute année commencée vaut pour une année), triés par ancienneté (on utilisera les fonctions de base de traitement de date et de traitement de chaîne).
+
+	SELECT DATEMB, CURRENT_DATE, YEAR(CURRENT_DATE) - YEAR(DATEMB) as ANCIENNETE 
+	FROM EMPLOYES;
+
+
+20.	(*) Tous les employés ayant un A en troisième lettre de leurs noms.
+
+	SELECT NOM 
+	FROM EMPLOYES 
+	WHERE NOM LIKE '__a%';
+
+
+21.	Tous les employés ayant au moins deux A dans leurs noms.
+
+	SELECT NOM 
+	FROM employes
+	WHERE NOM LIKE '%a%a%';
+
+
+22.	(*) Donner les quatre dernières lettres du nom de chaque employé.
+
+	SELECT NOM, SUBSTR(NOM, -4, 4)
+	FROM employes;
+
+	OU
+
+	SELECT NOM, RIGHT(NOM, 4)
+	FROM EMPLOYES;
+
+23.	Quel est le plus gros salaire de l’entreprise ? FONCTION MAX interdite.
+
+	SELECT NOM, SAL 
+	FROM EMPLOYES
+	ORDER BY SAL DESC
+	LIMIT 1; 
+
+
+24.	(*) Quel est le plus gros salaire total des vendeurs (SALESMAN) ? FONCTION MAX interdite.
+
+	SELECT NOM, (SAL+IFNULL(COMM,0)) AS TTC, FONCTION 
+	FROM EMPLOYES
+	WHERE FONCTION = 'SALESMAN'
+	ORDER BY TTC DESC
+	LIMIT 1;
+
+
+25.	Lister 3 employés au hasard
+
+	SELECT NOM 
+	FROM employes
+	ORDER BY rand()
+	LIMIT 3;
+
+
+26.	(*) Afficher tous les employés en affichant : « anciens » pour ceux embauchés avant le 1 janvier 1982, rien pour ceux embauchés en 1982 et « nouveaux » pour ceux embauchés après le 1 janvier 1983. On utilisera deux méthodes : le case et le if. On tri par date d’embauche et par ordre alphabétique.
+
+	SELECT NOM, DATEMB,
+	IF(DATEMB < '1982-01-01', "ancien", IF(year(DATEMB) = 1982, "", "nouveau"))
+	AS "ancienneté"
+	FROM EMPLOYES
+	ORDER BY DATEMB, NOM;
+
+	SELECT NOM, DATEMB,
+	CASE 
+		WHEN DATEMB <'1982-01-01' THEN 'ancien'
+		WHEN year(DATEMB) = 1982 THEN ''
+		ELSE "nouveau"
+	END AS 'ancienneté'
+	FROM employes;
+
+
+27.	Afficher les employés avec le numéro de leur tranche de salaire. Le numéro va de 1 à N. La première tranche va de 0 à 999, la deuxième de 1000 à 1999, la troisième de 2000 à 2999, etc. On considère qu’on ne sait pas à l’avance combien il y aura de tranche. On affichera les résultats par ordre de tranche croissante et par ordre alphabétique à l’intérieur d’une même tranche. On affiche tous les attributs et la tranche à côté du salaire.
+
+	SELECT nom, SAL, SAL DIV 1000+1 AS TRANCHE -- DIV pour la partie entiere
+	FROM EMPLOYES
+	ORDER BY TRANCHE, NOM;
+
+
+27 bis : 
+    Créer une vue apppelée tranches qui contiennent la requête précédente.
+    Vérifier que cette vue a bien été créée
+    Ecrire une requêtes qui affiche tous les éléments de cette vue avec tous leurs attributs.
+    Ecrire une requête qui affiche les salariés dont la tranche est >3 avec leur salaire.
+
+	CREATE VIEW tranche_view AS
+	SELECT NE, NOM, FONCTION, DATEMB, SAL, COMM, ND, SAL DIV 1000 AS TRANCHE
+	FROM EMPLOYES
+	ORDER BY TRANCHE, NOM;
+
+	SELECT * 
+	FROM tranche_view
+    WHERE tranche > 3;
