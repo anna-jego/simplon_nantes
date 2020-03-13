@@ -1,0 +1,42 @@
+id,noms_pays,PIB,indicateur_vivre_mieux,continents
+0,Afrique du Sud,5.4945054945054945,4.7,Afrique
+1,Colombie,6.593406593406593,6.3,Amérique du Sud
+2,Brésil,8.79120879120879,6.4,Amérique du Sud
+3,Russie,9.89010989010989,5.8,Asie
+4,Turquie,9.89010989010989,5.5,Europe
+5,Mexique,9.89010989010989,6.5,Amérique du Nord
+6,Pologne,13.186813186813186,6.1,Europe
+7,Hongrie,13.186813186813186,5.6,Europe
+8,Lettonie,14.285714285714285,5.9,Europe
+9,Chili,14.285714285714285,6.5,Amérique du Sud
+10,Lituanie,15.384615384615383,5.9,Europe
+11,République Slovaque,16.483516483516482,6.2,Europe
+12,Estonie,18.681318681318682,5.7,Europe
+13,République Tchèque,18.681318681318682,6.7,Europe
+14,Grèce,19.78021978021978,5.4,Europe
+15,Portugal,20.87912087912088,5.4,Europe
+16,Slovénie,21.978021978021978,5.9,Europe
+17,Espagne,27.47252747252747,6.3,Europe
+18,Corée,29.670329670329668,5.9,Asie
+19,Italie,31.86813186813187,6.0,Europe
+20,Japon,35.16483516483516,5.9,Asie
+21,Israël,38.46153846153846,7.2,Asie
+22,France,40.65934065934066,6.5,Europe
+23,Nouvelle-Zélande,40.65934065934066,7.3,Océanie
+24,Allemagne,43.956043956043956,7.0,Europe
+25,Belgique,43.956043956043956,6.9,Europe
+26,Finlande,45.05494505494505,7.6,Europe
+27,Pays-Bas,47.25274725274725,7.4,Europe
+28,Canada,47.25274725274725,7.4,Amérique du Nord
+29,Autriche,47.25274725274725,7.1,Europe
+30,Royaume-Uni,47.25274725274725,6.8,Europe
+31,Suède,53.84615384615385,7.3,Europe
+32,Australie,54.94505494505494,7.3,Océanie
+33,Islande,54.94505494505494,7.5,Europe
+34,Irlande,56.043956043956044,7.0,Europe
+35,Danemark,57.14285714285714,7.6,Europe
+36,États-Unis,60.43956043956044,6.9,Amérique du Nord
+37,Norvège,81.31868131868131,7.6,Europe
+38,Suisse,87.91208791208791,7.5,Europe
+39,Luxembourg,110.98901098901098,6.9,Europe
+40,Russie,9.89010989010989,5.8,Europe
